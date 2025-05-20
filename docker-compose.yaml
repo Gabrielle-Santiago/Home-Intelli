@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: Home-Intelli/app/backend/Dockerfile
+    container_name: fastapi_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Home-Intelli/app/backend:/app
+    networks:
+      - iot_net
+
+  simulations:
+    build: 
+      context: .
+      dockerfile: Home-Intelli/app/simulations/Dockerfile
+    container_name: iot_simulation
+    volumes:
+      - ./Home-Intelli/app/simulations:/app
+
+    networks:
+      - iot_net
+
+networks:
+  iot_net:
+    driver: bridge
