@@ -14,7 +14,7 @@ services:
       MQTT_USERNAME: fastapi_user 
       MQTT_PASSWORD: fastapi_password
     volumes:
-      - ./homeIntelli/app/backend:/app
+      - ./homeIntelli/app/backend:/app 
     networks:
       - iot_net
 
@@ -24,29 +24,29 @@ services:
       dockerfile: homeIntelli/app/simulations/Dockerfile
     container_name: iot_simulation
     volumes:
-      - ./homeIntelli/app/simulations:/app
+      - ./homeIntelli/app/simulations:/app 
     networks:
       - iot_net
 
   mosquitto:
-    image: eclipse-mosquitto:2.0.15
     container_name: mosquitto_broker
+    image: eclipse-mosquitto:2.0.15
     ports:
       - "1883:1883"
     volumes:
-      - ./homeIntelli/app/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
-      - ./homeIntelli/app/mosquitto/passwd:/mosquitto/config/passwd
-      - ./homeIntelli/app/mosquitto/acl.conf:/mosquitto/config/acl.conf
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto/passwd:/mosquitto/config/passwd
+      - ./mosquitto/acl.conf:/mosquitto/config/acl.conf
       - mosquitto_data:/mosquitto/data
       - mosquitto_log:/mosquitto/log
     restart: unless-stopped
     networks:
       - iot_net
 
-volumes:
-  mosquitto_data:
-  mosquitto_log:
-
 networks:
   iot_net:
     driver: bridge
+
+volumes:
+  mosquitto_data:
+  mosquitto_log:
